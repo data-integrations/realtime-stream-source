@@ -24,6 +24,7 @@ import co.cask.cdap.api.data.format.StructuredRecord;
 import co.cask.cdap.api.data.schema.Schema;
 import co.cask.cdap.api.data.stream.Stream;
 import co.cask.cdap.api.flow.flowlet.StreamEvent;
+import co.cask.cdap.api.plugin.PluginConfig;
 import co.cask.cdap.api.spark.JavaSparkExecutionContext;
 import co.cask.cdap.etl.api.PipelineConfigurer;
 import co.cask.cdap.etl.api.streaming.StreamingContext;
@@ -50,7 +51,7 @@ import javax.annotation.Nullable;
 @Plugin(type = StreamingSource.PLUGIN_TYPE)
 @Name("Stream")
 @Description("CDAP stream realtime spark streaming source.")
-public class RealtimeStreamingSource extends ReferenceStreamingSource<StructuredRecord> {
+public class RealtimeStreamingSource extends StreamingSource<StructuredRecord> {
 
   private static final String FORMAT_SETTING_PREFIX = "format.setting.";
   private static final Schema DEFAULT_SCHEMA = Schema.recordOf(
@@ -77,7 +78,6 @@ public class RealtimeStreamingSource extends ReferenceStreamingSource<Structured
   private final RealtimeStreamConfig config;
 
   public RealtimeStreamingSource(RealtimeStreamConfig config) {
-    super(config);
     this.config = config;
   }
 
@@ -103,7 +103,6 @@ public class RealtimeStreamingSource extends ReferenceStreamingSource<Structured
 
   @Override
   public JavaDStream<StructuredRecord> getStream(StreamingContext streamingContext) throws Exception {
-    registerUsage(streamingContext);
     JavaStreamingContext jsc = streamingContext.getSparkStreamingContext();
     Field f = streamingContext.getClass().getDeclaredField("sec");
     f.setAccessible(true);
@@ -141,7 +140,7 @@ public class RealtimeStreamingSource extends ReferenceStreamingSource<Structured
   /**
    * {@link ReferencePluginConfig} class for {@link RealtimeStreamingSource}
    */
-  public static class RealtimeStreamConfig extends ReferencePluginConfig implements Serializable {
+  public static class RealtimeStreamConfig extends PluginConfig implements Serializable {
 
 
     @Name(NAME)
@@ -156,10 +155,6 @@ public class RealtimeStreamingSource extends ReferenceStreamingSource<Structured
     @Description(SCHEMA_DESCRIPTION)
     @Nullable
     private String schema;
-
-    public RealtimeStreamConfig(String referenceName) {
-      super(referenceName);
-    }
 
     private void validate() {
       // check the schema if there is one
