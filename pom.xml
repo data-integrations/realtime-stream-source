@@ -21,7 +21,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>groupId</groupId>
-  <artifactId>RealtimeSource-sparkSource</artifactId>
+  <artifactId>realtime-stream-source</artifactId>
   <version>1.0-SNAPSHOT</version>
 
   <licenses>
@@ -80,7 +80,7 @@
   </repositories>
 
   <properties>
-    <cdap.version>4.0.1</cdap.version>
+    <cdap.version>4.1.1</cdap.version>
     <hadoop.version>2.3.0</hadoop.version>
     <junit.version>4.11</junit.version>
     <hydrator.version>1.5.0</hydrator.version>
