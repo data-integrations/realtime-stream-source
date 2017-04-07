@@ -85,6 +85,7 @@ public class RealTimeStreamTest extends HydratorTestBase {
                       RealtimeStreamingSource.class);
   }
 
+  @Ignore
   @Test
   public void testStreamingSource() throws Exception {
     Schema schema = Schema.recordOf(
