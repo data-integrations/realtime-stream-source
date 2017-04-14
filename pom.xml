@@ -82,7 +82,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <cdap.version>4.1.0</cdap.version>
+    <cdap.version>4.1.1</cdap.version>
     <hadoop.version>2.3.0</hadoop.version>
     <commons-jexl.version>3.0</commons-jexl.version>
     <commons-csv.version>1.4</commons-csv.version>
@@ -103,7 +103,7 @@
     <natty.version>0.11</natty.version>
     <junit.version>4.11</junit.version>
     <spark.version>1.6.2</spark.version>
-    <hydrator.version>1.6.0</hydrator.version>
+    <hydrator.version>1.6.1</hydrator.version>
   </properties>
 
   <dependencies>
