@@ -42,6 +42,7 @@ import co.cask.hydrator.plugin.spark.RealtimeStreamingSource;
 import com.google.common.collect.ImmutableSet;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -84,6 +85,7 @@ public class RealTimeStreamTest extends HydratorTestBase {
                       RealtimeStreamingSource.class);
   }
 
+  @Ignore
   @Test
   public void testStreamingSource() throws Exception {
     Schema schema = Schema.recordOf(
