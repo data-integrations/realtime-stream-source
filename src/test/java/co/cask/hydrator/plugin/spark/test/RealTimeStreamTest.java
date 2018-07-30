@@ -16,6 +16,8 @@
 
 package co.cask.hydrator.plugin.spark.test;
 
+import co.cask.cdap.api.artifact.ArtifactRange;
+import co.cask.cdap.api.artifact.ArtifactSummary;
 import co.cask.cdap.api.artifact.ArtifactVersion;
 import co.cask.cdap.api.data.schema.Schema;
 import co.cask.cdap.api.dataset.table.Table;
@@ -28,10 +30,8 @@ import co.cask.cdap.etl.mock.test.HydratorTestBase;
 import co.cask.cdap.etl.proto.v2.DataStreamsConfig;
 import co.cask.cdap.etl.proto.v2.ETLPlugin;
 import co.cask.cdap.etl.proto.v2.ETLStage;
-import co.cask.cdap.proto.Id;
 import co.cask.cdap.proto.artifact.AppRequest;
-import co.cask.cdap.proto.artifact.ArtifactRange;
-import co.cask.cdap.proto.artifact.ArtifactSummary;
+import co.cask.cdap.proto.id.ApplicationId;
 import co.cask.cdap.proto.id.ArtifactId;
 import co.cask.cdap.proto.id.NamespaceId;
 import co.cask.cdap.test.ApplicationManager;
@@ -58,12 +58,11 @@ public class RealTimeStreamTest extends HydratorTestBase {
   @ClassRule
   public static final TestConfiguration CONFIG = new TestConfiguration("explore.enabled", false);
 
-  protected static final ArtifactId DATAPIPELINE_ARTIFACT_ID =
+  private static final ArtifactId DATAPIPELINE_ARTIFACT_ID =
     NamespaceId.DEFAULT.artifact("data-pipeline", "4.0.0");
-  protected static final ArtifactSummary DATAPIPELINE_ARTIFACT = new ArtifactSummary("data-pipeline", "4.0.0");
-  protected static final ArtifactId DATASTREAMS_ARTIFACT_ID =
+  private static final ArtifactId DATASTREAMS_ARTIFACT_ID =
     NamespaceId.DEFAULT.artifact("data-streams", "4.0.0");
-  protected static final ArtifactSummary DATASTREAMS_ARTIFACT = new ArtifactSummary("data-streams", "4.0.0");
+  private static final ArtifactSummary DATASTREAMS_ARTIFACT = new ArtifactSummary("data-streams", "4.0.0");
 
   @BeforeClass
   public static void setupTest() throws Exception {
@@ -74,10 +73,10 @@ public class RealTimeStreamTest extends HydratorTestBase {
 
     // add artifact for spark plugins
     Set<ArtifactRange> parents = ImmutableSet.of(
-      new ArtifactRange(NamespaceId.DEFAULT.toId(), DATAPIPELINE_ARTIFACT_ID.getArtifact(),
+      new ArtifactRange(NamespaceId.DEFAULT.getNamespace(), DATAPIPELINE_ARTIFACT_ID.getArtifact(),
                         new ArtifactVersion(DATAPIPELINE_ARTIFACT_ID.getVersion()), true,
                         new ArtifactVersion(DATAPIPELINE_ARTIFACT_ID.getVersion()), true),
-      new ArtifactRange(NamespaceId.DEFAULT.toId(), DATASTREAMS_ARTIFACT_ID.getArtifact(),
+      new ArtifactRange(NamespaceId.DEFAULT.getNamespace(), DATASTREAMS_ARTIFACT_ID.getArtifact(),
                         new ArtifactVersion(DATASTREAMS_ARTIFACT_ID.getVersion()), true,
                         new ArtifactVersion(DATASTREAMS_ARTIFACT_ID.getVersion()), true)
     );
@@ -111,7 +110,7 @@ public class RealTimeStreamTest extends HydratorTestBase {
       .build();
 
     AppRequest<DataStreamsConfig> appRequest = new AppRequest<>(DATASTREAMS_ARTIFACT, etlConfig);
-    Id.Application appId = Id.Application.from(Id.Namespace.DEFAULT, "StreamSourceApp");
+    ApplicationId appId = NamespaceId.DEFAULT.app("StreamSourceApp");
     ApplicationManager appManager = deployApplication(appId, appRequest);
 
     SparkManager sparkManager = appManager.getSparkManager(DataStreamsSparkLauncher.NAME);
