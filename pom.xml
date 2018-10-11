@@ -22,7 +22,7 @@
 
   <groupId>groupId</groupId>
   <artifactId>realtime-stream-source</artifactId>
-  <version>1.5.0-SNAPSHOT</version>
+  <version>1.5.0</version>
 
   <licenses>
     <license>
@@ -80,7 +80,7 @@
   </repositories>
 
   <properties>
-    <cdap.version>5.1.0-SNAPSHOT</cdap.version>
+    <cdap.version>5.1.0</cdap.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <hadoop.version>2.3.0</hadoop.version>
     <commons-jexl.version>3.0</commons-jexl.version>
@@ -90,7 +90,7 @@
     <!-- properties for script build step that creates the config files for the artifacts -->
     <widgets.dir>widgets</widgets.dir>
     <docs.dir>docs</docs.dir>
-    <app.parents>system:cdap-data-pipeline[5.1.0-SNAPSHOT,5.2.0-SNAPSHOT),system:cdap-data-streams[5.1.0-SNAPSHOT,5.2.0-SNAPSHOT)</app.parents>
+    <app.parents>system:cdap-data-pipeline[5.1.0,6.0.0-SNAPSHOT),system:cdap-data-streams[5.1.0,6.0.0-SNAPSHOT)</app.parents>
     <!-- this is here because project.basedir evaluates to null in the script build step -->
     <main.basedir>${project.basedir}</main.basedir>
     <unix4j.version>0.4</unix4j.version>
